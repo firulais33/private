@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
 
   get 'carros/show'
+  
+  ActiveAdmin.routes(self)
 
   devise_for :admins, :skip => [:registrations], path: 'admins', controllers: { sessions: "admins/sessions"}
   devise_for :users, path: 'users', controllers: { sessions: "users/sessions"}
