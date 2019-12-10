@@ -1,0 +1,12 @@
+<% if admin_signed_in? %>
+    <table style="background-color:#FFFFFF; border: 1px solid black;"; align="center";>
+        <thead><h1 style= "color:#2D2C2C; display:block;">Restaurantes</h1></thead>
+            <tbody style="overflow-y:scroll; display:block; max-height:420px" >
+                <% @restaurants.each do |restaurant| %>
+                    <% if not restaurant.aceptado %>
+                    <tr><td align="center"><h2><%= link_to restaurant.nombre, restaurant_path(restaurant), {:style=>"color:#2D2C2C;"} %></h2></td></tr>
+                    <% end %>
+                <% end %>
+        </tbody>
+    </table>
+<% end %>

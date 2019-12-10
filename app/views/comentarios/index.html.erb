@@ -1,0 +1,24 @@
+<body class="Total">
+  <div class="show-grid">
+    <div class="row">
+
+      <center>
+      <div class="col-md-8" style="padding: 0">
+        <tbody style="overflow-y:scroll; display:block; max-height:420px">
+
+          <% @restaurant.comentarios.each do |comentario| %>
+            <tr><td align="center"><h2><%= link_to comentario.body, restaurant_comentario_path(@restaurant, comentario), {:style=>"color:#2D2C2C;"} %></h2></td></tr>
+          <% end %>
+        </tbody>
+
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+        <%= link_to '<button class = "boton"><i class="fas fa-arrow-left"></i></button>'.html_safe, restaurant_path(@restaurant) %>
+
+        <% if user_signed_in? %>
+          <%= link_to '<button class = "boton"><i class="fas fa-plus"></i></button>'.html_safe, new_restaurant_comentario_path(@restaurant) %>
+        <% end %>
+      </center>
+      </div>
+    </div>
+</body>

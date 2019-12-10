@@ -1,0 +1,26 @@
+<html>
+<style>
+  .text-center {
+    text-align: center;
+  }
+</style>
+</html>
+
+<div class="text-center"> <h1> Tu Pedido </h1> </div>
+<section class="section">
+  <%= render(@carro.placements) %>
+
+  <div class="text-center">
+    <div class="column total has-text-right">
+      <h2 class="title is-4">
+        <span class="f5 has-text-gray">Total:</span> <%= number_to_currency(@carro.precio_total) %>
+      </h2>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <%= link_to '<button class = "boton"><i class="fas fa-trash-alt"></i></button>'.html_safe, @carro, method: :delete,
+        data: {confirm: 'Tu pedido se eliminará, ¿estás seguro?'} %>
+    <%= link_to '<button class = "boton"><i class="fas fa-shipping-fast"></i></button>'.html_safe, new_pedido_path %>
+  </div>
+</section>

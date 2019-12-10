@@ -1,0 +1,14 @@
+<body class="Total" >
+  <div class="col-md-6 col-md-offset-3">
+    <div class="login-form">
+        <%= simple_form_for @restaurant do |f| %>
+            <%= f.file_field :restaurant_img, style: "text-align:center;" %>
+            <%= f.input :nombre, label: "Nombre Restaurante" %>
+            <%= f.input :correo %>
+            <%= f.input :direccion %>
+            <%= f.input :numero %>
+            <%= f.button :submit, "Crear Restaurante", :class => 'btn-custom2' %>
+        <% end %>
+    </div>
+  </div>
+</body>

@@ -1,0 +1,49 @@
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<body class="Total">
+  <div class="show-grid">
+    <div class="row">
+      <center>
+        <div class="col-md-4" style="padding: 18.8px 0 18.8px">
+          <%= image_tag @restaurant.restaurant_img.url(:restaurant_show), class: "imagen-show" %>
+        </div>
+      </center>
+      <div class="col-md-8" style="padding: 0">
+          <p style="font-family: 'Courgette', cursive; margin: 0; font-size:40px;"><%= @restaurant.nombre%></p>
+          <p style="margin: 0; font-size:30px;"> Valoración: <%= @promedio_valoracion%></p>
+          <p style="margin: 0; font-size:20px;"><i class="far fa-envelope"></i>    <%= @restaurant.correo %></p>
+          <p style="margin: 0; font-size:20px;"><i class="fas fa-map-marker-alt"></i>    <%= @restaurant.direccion %></p>
+          <p style="margin: 0; font-size:20px;"><i class="fas fa-phone-alt"></i>    <%= @restaurant.numero %></p>
+          <% if not user_signed_in? and not admin_signed_in? %>
+            <%= link_to '<button class = "boton"><i class="fas fa-arrow-left"></i></button>'.html_safe, welcome_vista_path %>
+          <% else %>
+            <%= link_to '<button class = "boton"><i class="fas fa-arrow-left"></i></button>'.html_safe, root_path %>
+          <% end %>
+            <%= link_to '<button class = "boton"><i class="fas fa-utensils"></i></button>'.html_safe, restaurant_platos_path(@restaurant) %>
+            <%= link_to '<button class = "boton"><i class="fas fa-comments"></i></button>'.html_safe, restaurant_comentarios_path(@restaurant) %>
+          <% if user_signed_in? %>
+            <% if @restaurant.fav.include?(current_user.id.to_s) %>
+              <%= link_to '<button class = "boton"><i class="fas fa-star"></i></button>'.html_safe, restaurant_favorito_path(@restaurant) %>
+            <% else %>
+              <%= link_to '<button class = "boton"><i class="far fa-star"></i></button>'.html_safe, restaurant_favorito_path(@restaurant) %>
+            <% end %>
+            <% if @restaurant.user_id == current_user.id%>
+              <%= link_to '<button class = "boton"><i class="fas fa-edit"></i></button>'.html_safe, edit_restaurant_path(@restaurant) %>
+              <%= link_to '<button class = "boton"><i class="fas fa-trash-alt"></i></button>'.html_safe, restaurant_path(@restaurant), method: :delete, data: { confirm: "Estás seguro?" } %>
+              <%= link_to '<button class = "boton"><i class="fas fa-list"></i></button>'.html_safe, restaurant_placements_list_path(:id => @restaurant.id) %>
+            <% end %>
+          <% elsif admin_signed_in? %>
+            <% if @restaurant.aceptado %>
+              <%= link_to '<button class = "boton"><i class="fas fa-edit"></i></button>'.html_safe, edit_restaurant_path(@restaurant) %>
+              <%= link_to '<button class = "boton"><i class="fas fa-trash-alt"></i></button>'.html_safe, restaurant_path(@restaurant), method: :delete, data: { confirm: "Estás seguro?" } %>
+            <% else %>
+              <%= link_to '<button type="button" style="BORDER: rgb(128,128,128) 1px solid; FONT-SIZE: 12pt; FONT-FAMILY: Verdana;
+              BACKGROUND-COLOR: rgb(233,233,233); color: #2D2C2C">Aceptar</button>'.html_safe, restaurant_aceptar_path(@restaurant), data: { confirm: "Estás seguro?" } %>
+              <%= link_to '<button type="button" style="BORDER: rgb(128,128,128) 1px solid; FONT-SIZE: 12pt; FONT-FAMILY: Verdana;
+              BACKGROUND-COLOR: rgb(233,233,233); color: #2D2C2C">Rechazar</button>'.html_safe, restaurant_path(@restaurant), method: :delete, data: { confirm: "Estás seguro?" } %>
+            <% end %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</body>

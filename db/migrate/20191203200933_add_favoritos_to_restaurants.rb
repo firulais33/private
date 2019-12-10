@@ -1,0 +1,5 @@
+class AddFavoritosToRestaurants < ActiveRecord::Migration[5.2]
+  def change
+    add_column :restaurants, :favoritos, :text
+  end
+end

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<html>
+  <head>
+    <title>Grupo28Proyecto</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+    <div class="menu">
+    <% if not admin_signed_in? and not user_signed_in? %>
+      <%= link_to '<button class = "boton"><i class="fas fa-lock"></i></button>'.html_safe, new_admin_session_path %>
+    <% elsif admin_signed_in? %>
+      <%= link_to '<button class = "boton"><i class="fas fa-unlock"></i></button>'.html_safe, destroy_admin_session_path, method: :delete %>
+    <% end %>
+    <%= link_to '<button class = "boton"><i class="fas fa-home"></i></button>'.html_safe, root_path %>
+      <% if user_signed_in?%>
+        <%= link_to '<button class = "boton"><i class="fas fa-user"></i></button>'.html_safe, edit_user_registration_path %>
+        <%= link_to '<button class = "boton"><i class="fas fa-sign-out-alt"></i></button>'.html_safe, destroy_user_session_path, method: :delete %>
+      <% end %>
+      <% if admin_signed_in?%>
+        <%= link_to '<button class = "boton"><i class="fas fa-server"></i></button>'.html_safe, welcome_aceptar_rechazar_path %>
+      <% end %>
+    </div>
+    <%= yield %>
+  </body>
+</html>

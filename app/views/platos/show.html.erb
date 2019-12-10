@@ -1,0 +1,35 @@
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<body class="Total">
+  <div class="row">
+    <center>
+      <div class="col-md-4" style="padding: 0;">
+        <%= image_tag @plato.plato_img.url(:plato_show), class: "imagen-show" %>
+      </div>
+    </center>
+    <div class="col-md-8" style="padding: 0">
+      <p style="margin: 0; font-size:40px;"><%= @plato.nombre %></p>
+      <p style="margin: 0; font-size:30px;">Valoración <%= @promedio_valoracion_p %></p>
+      <p style="margin: 0; font-size:20px;"><i class="fas fa-dollar-sign"></i>     <%= @plato.precio %></p>
+      <p style="margin: 0; font-size:20px;"><i class="fas fa-users"></i>     <%= @plato.cantidad_personas %></p>
+      <p style="margin: 0; font-size:15px; max-width: 100%;"><%= @plato.descripcion %></p>
+      <%= link_to '<button class = "boton"><i class="fas fa-arrow-left"></i></button>'.html_safe, restaurant_platos_path(@restaurant) %>
+      <%= link_to '<button class = "boton"><i class="fas fa-comments"></i></button>'.html_safe, restaurant_plato_coments_path(@restaurant, @plato) %>
+      <% if user_signed_in? %>
+        <% if @plato.fav.include?(current_user.id.to_s) %>
+          <%= link_to '<button class = "boton"><i class="fas fa-star"></i></button>'.html_safe, restaurant_plato_favorito_path(@restaurant, @plato) %>
+        <% else %>
+          <%= link_to '<button class = "boton"><i class="far fa-star"></i></button>'.html_safe, restaurant_plato_favorito_path(@restaurant, @plato) %>
+        <% end %>
+        <%= link_to '<button class = "boton"><i class="fas fa-cart-plus"></i></button>'.html_safe, placements_path(plato_id: @plato.id, cantidad: 1), method: :post %>
+        <% if @restaurant.user_id == current_user.id%>
+          <%= link_to '<button class = "boton"><i class="fas fa-edit"></i></button>'.html_safe, edit_restaurant_plato_path(@restaurant, @plato) %>
+          <%= link_to '<button class = "boton"><i class="fas fa-trash-alt"></i></button>'.html_safe, restaurant_plato_path(@restaurant, @plato), method: :delete, data: { confirm: "Estás seguro?" } %>
+        <% end %>
+      <% elsif admin_signed_in? %>
+        <%= link_to '<button class = "boton"><i class="fas fa-edit"></i></button>'.html_safe, edit_restaurant_plato_path(@restaurant, @plato) %>
+        <%= link_to '<button class = "boton"><i class="fas fa-trash-alt"></i></button>'.html_safe, restaurant_plato_path(@restaurant, @plato), method: :delete, data: { confirm: "Estás seguro?" } %>
+      <% end %>
+    </div>
+  </div>
+</body>

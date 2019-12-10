@@ -1,0 +1,40 @@
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<html>
+<head>
+  <div class="text-center"> <h1> Pedidos Pendientes </h1> </div>
+<style>
+  .text-center {
+    text-align: center;
+  }
+</style>
+</head>
+
+<body class="Total">
+  <% if @placements.empty? %>
+      <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+          <div class="row">
+            <center>
+              <div class="text-center"><h1> No hay pedidos por el momento. </h1> </div>
+            </center>
+          </div>
+  <% end %>
+
+  <%= @placements.each do |placement| %>
+    <div class="row">
+      <center>
+        <div class="col-md-4" style="padding: 0;">
+          <%= image_tag placement.plato.plato_img.url(:plato_show), class: "imagen-show" %>
+        </div>
+      </center>
+      <div class="col-md-8" style="padding: 0">
+        <p style="margin: 0; font-size:40px;"><%= placement.plato.nombre %> x <%= placement.cantidad %></p>
+        <p style="margin: 0; font-size:20px;"><i class="fas fa-map-marker-alt"></i> <%= placement.direccion %></p>
+        <p style="margin: 0; font-size:20px;"><i class="fas fa-hand-point-right"></i> Aclaraciones: <%= placement.aclaraciones %></p>
+
+        <%= link_to '<button class = "boton"><i class="fas fa-check" style="color:green"></i></button>'.html_safe, placement_confirm_path(:id => placement), method: :post %>
+        <%= link_to '<button class = "boton"><i class="fas fa-times" style="color:red"></i></button>'.html_safe, placement_reject_path(:id => placement), method: :post %>
+      </div>
+    </div>
+  <% end %>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<body class="Total">
+  <div class="show-grid">
+    <div class="row">
+
+      <center>
+      <div class="col-md-8" style="padding: 0">
+        <p style="margin: 0; font-size:30px;"> Valoración del Plato: <%= @coment.puntaje%></p>
+        <p style="margin: 0; font-size:20px;"><i class="far fa-envelope"></i>    <%= @coment.body %></p>
+
+        <% if not user_signed_in? and not admin_signed_in? %>
+          <%= link_to '<button class = "boton"><i class="fas fa-arrow-left"></i></button>'.html_safe, restaurant_plato_coments_path(@restaurant, @plato) %>
+        <% else %>
+          <%= link_to '<button class = "boton"><i class="fas fa-arrow-left"></i></button>'.html_safe, restaurant_plato_coments_path(@restaurant, @plato)%>
+        <% end %>
+
+
+        <% if user_signed_in? %>
+          <% if current_user.id == @coment.user_id%>
+            <%= link_to '<button class = "boton"><i class="fas fa-edit"></i></button>'.html_safe, edit_restaurant_plato_coment_path(@restaurant, @plato, @coment) %>
+            <%= link_to '<button class = "boton"><i class="fas fa-trash-alt"></i></button>'.html_safe, restaurant_plato_coment_path(@restaurant, @plato, @coment), method: :delete, data: {confirm: "¿Estas seguro?"} %>
+          <% end %>
+        <% elsif admin_signed_in? %>
+          <%= link_to '<button class = "boton"><i class="fas fa-edit"></i></button>'.html_safe, edit_restaurant_plato_coment_path(@restaurant, @plato, @coment) %>
+          <%= link_to '<button class = "boton"><i class="fas fa-trash-alt"></i></button>'.html_safe, restaurant_plato_coment_path(@restaurant, @plato, @coment), method: :delete, data: {confirm: "¿Estas seguro?"} %>
+        <% end %>
+      </center>
+      </div>
+    </div>
+</body>

@@ -1,0 +1,77 @@
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script>
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+if (!event.target.matches('.dropbtn')) {
+  var dropdowns = document.getElementsByClassName("dropdown-content");
+  var i;
+  for (i = 0; i < dropdowns.length; i++) {
+  var openDropdown = dropdowns[i];
+  if (openDropdown.classList.contains('show')) {
+      openDropdown.classList.remove('show');
+  }
+  }
+}
+}
+</script>
+<body class="Total">
+  <div class="grid-container-platos">
+    <div class="uno-platos">
+      <div class="arriba">
+        <div class="izquierda">
+          <form class="bus" action="<%= restaurant_platos_path(@restaurant) %>" >
+            <input type="search" id="miBusqueda" name="q" class = "buscador" placeholder="Buscar Plato...">
+            <button type="submit" class="boton-buscar"><i class="fas fa-search"></i></button>
+          </form>
+        </div>
+        <div class="derecha">
+          <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">
+              <i class="fas fa-sort-amount-down"></i>  Filtrar por...
+            </button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="?type=valorados">Mejor valorados</a>
+              <% if user_signed_in? %>
+                <a href="?type=favoritos">Favoritos</a>
+              <% end %>
+              <a href="?type=mayor-precio">Mayor Precio</a>
+              <a href="?type=menor-precio">Menor Precio</a>
+              <a href="?type=ascendente">A-Z</a>
+              <a href="?type=descendente">Z-A</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="abajo">
+        <% @platos.each do |plato| %>
+          <div class="restaurante">
+            <a href="/restaurants/<%= @restaurant.id %>/platos/<%= plato.id %>" class="link"><%= image_tag plato.plato_img.url(:plato_index), class: "img-restaurante" %></a>
+            <br></br>
+            <%= link_to plato.nombre, restaurant_plato_path(@restaurant, plato), class: "link" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="dos-platos">
+      <div class="parte-3">
+        <p style="margin: 0; pading: 0; font-size: 20px;">Ver pedidos anteriores!</p>
+      </div>
+      <div class="parte-2">
+      opcion 2
+
+      </div>
+      <div class="parte-3">
+        <%= link_to '<button class = "boton"><i class="fas fa-arrow-left"></i>  Volver a perfil Restaurante</button>'.html_safe, restaurant_path(@restaurant) %>
+        <% if user_signed_in? %>
+          <% if @restaurant.user_id == current_user.id %>
+            <%= link_to '<button class = "boton" style="diplay: inline"><i class="fas fa-plus"></i>  Agregar nuevo plato</button>'.html_safe, new_restaurant_plato_path(@restaurant) %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</body>

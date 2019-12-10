@@ -1,0 +1,13 @@
+<div>
+  <%= link_to "Seguir Comprando", root_path, class: 'button is-warning' %>
+</div>
+
+<section class="section">
+  <p>Platos: </p>
+  <ul>
+    <%= @pedido.placements.each do |placement| %>
+    <li><%= placement.cantidad %> x <%= placement.plato.nombre %></li>
+    <li> <%= placement.plato.restaurant.id %> </li>
+    <% end %>
+  </ul>
+</section>

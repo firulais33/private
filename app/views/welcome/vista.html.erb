@@ -1,0 +1,78 @@
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script>
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+if (!event.target.matches('.dropbtn')) {
+  var dropdowns = document.getElementsByClassName("dropdown-content");
+  var i;
+  for (i = 0; i < dropdowns.length; i++) {
+  var openDropdown = dropdowns[i];
+  if (openDropdown.classList.contains('show')) {
+      openDropdown.classList.remove('show');
+  }
+  }
+}
+}
+</script>
+<body class="Total">
+  <div class="grid-container">
+    <div class="uno">
+      <div class="arriba">
+        <div class="izquierda">
+          <form class="bus" action="<%= root_path %>" >
+            <input type="search" id="miBusqueda" name="q" class = "buscador" placeholder="Buscar Restaurante...">
+            <button type="submit" class="boton-buscar"><i class="fas fa-search"></i></button>
+          </form>
+        </div>
+        <div class="derecha">
+          <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">
+            <i class="fas fa-sort-amount-down"></i>  Filtrar por...
+            </button>
+            <div id="myDropdown" class="dropdown-content">
+              <a href="?type=valorados">Mejor valorados</a>
+              <a href="?type=ascendente">A-Z</a>
+              <a href="?type=descendente">Z-A</a>
+            </div>
+          </div>
+        </div>  
+      </div>
+      <div class="abajo">
+        <% @restaurants.each do |restaurant| %>
+          <% if restaurant.aceptado %>
+            <div class="restaurante">
+              <a href="/restaurants/<%= restaurant.id %>" class="link"><%= image_tag restaurant.restaurant_img.url(:root_path), class: "img-restaurante" %></a>
+              <br></br>
+              <%= link_to restaurant.nombre, restaurant_path(restaurant), class: "link" %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="dos">
+      <div class="nuevo-restaurante">
+        <% if user_signed_in? %>
+          <p>Se parte de nuestra cadena de Restaurantes</p>
+          <%= link_to '<button type="button" style="BORDER: rgb(128,128,128) 1px solid; FONT-SIZE: 12pt; FONT-FAMILY: Verdana; 
+          BACKGROUND-COLOR: rgb(233,233,233); color: #2D2C2C;">Nuevo Restaurante</button>'.html_safe, new_restaurant_path %>
+        <% end %>
+      </div>
+      <div class="parte-2">
+        opcion 2
+        <% if pedido_has_items %>
+          <%= link_to @pedido, class: 'navbar-item button is-warning' do %>
+            <span class="boton"><i class="fas fa-shopping-cart"></i></span>
+            <span><%= pedido_count_over_one %>Que es esto</span>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="parte-3">
+        opcion 3
+      </div>
+    </div>
+  </div>
+</body>

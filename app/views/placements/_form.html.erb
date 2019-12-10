@@ -1,0 +1,7 @@
+<%= simple_form_for @placement do |f| %>
+    <%= f.hidden_field :plato_id, value: @plato_id %>
+    <%= f.hidden_field :restaurant_id, value: @plato.restaurant_id %>
+    <%= f.input :cantidad %>
+    <%= f.button :submit %>
+
+<% end %>

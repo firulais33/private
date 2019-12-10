@@ -1,0 +1,66 @@
+<html>
+<style>
+  .imagen-show-small {
+  	height: 30%;
+  	width: 30%;
+  	margin: auto;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+</style>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<body class="Total">
+  <div class="arriba" style="background: black;">
+    <div class="izquierda">
+      <div class="text-center"> <h3> Mis Pedidos </h3> </div>
+    </div>
+    <div class="derecha">
+      <div class="text-center">
+        <div class="dropdown">
+          <button onclick="myFunction()" class="dropbtn">
+            <i class="fas fa-sort-amount-down"></i>  Filtrar por...
+          </button>
+          <div id="myDropdown" class="dropdown-content">
+            <a href="?type=valorados">Mejor valorados</a>
+            <% if user_signed_in? %>
+              <a href="?type=favoritos">Favoritos</a>
+            <% end %>
+            <a href="?type=ascendente">A-Z</a>
+            <a href="?type=descendente">Z-A</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% current_user.pedidos.each do |pedido| %>
+    <div class="row">
+      <div class="col-md-9" style="padding: 0;">
+        <% pedido.placements.each do |placement| %>
+            <center>
+              <div class="col-md-4" style="padding: 0;">
+                <%= image_tag placement.plato.plato_img.url(:plato_show), class: "imagen-show-small" %>
+              </div>
+            </center>
+            <div class="col-md-8" style="padding: 0">
+              <p style="margin: 0; font-size:30px;"><%= placement.plato.nombre %> x <%= placement.cantidad %></p>
+              <p style="margin: 0; font-size:20px;"><i class="fas fa-dollar-sign"></i> <%= placement.precio_total %></p>
+              <p style="margin: 0; font-size:20px;"><i class="fas fa-question"></i>Status: <%= placement.status %></p>
+            </div>
+        <% end %>
+      </div>
+      <div class="col-md-3">
+        <div class=text-center">
+          <h3> Fecha: <%= pedido.created_at %> </h3>
+          <h3> Direccion: <%= pedido.direccion %> </h3>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= link_to 'Seguir comprando', root_path %>
+
+
+</body>
+</html>
